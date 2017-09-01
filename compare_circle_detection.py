@@ -10,8 +10,8 @@ from PIL import Image, ImageDraw
 
 circle_detector = CircleDetector()
 image_processor = ImageProcessor()
-spots = Spots({'x':  430, 'y':  290}, # these need to be hardcoded
-              {'x': 3260, 'y': 3320},
+spots = Spots({'x':  550, 'y':  218}, # these need to be hardcoded
+              {'x': 3360, 'y': 3230},
               {'x':   33, 'y':   35}, 1.0)
 
 image = Image.open("resized_dark_image.jpg")
@@ -28,8 +28,8 @@ spots_from_kp, spots_from_edges, spots_from_white = spots.create_spots_from_keyp
 print(len(spots_from_kp))
 print(len(spots_from_edges))
 print(len(spots_from_white))
-for adsf in spots_from_edges:
-    print(adsf)
+#for adsf in spots_from_edges:
+#    print(adsf)
 
 print("asdf")
 for adsf in spots_from_white:

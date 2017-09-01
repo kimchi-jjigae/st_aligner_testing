@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # takes in three files:
 #   the "ideal" spots file
 #   the output spots file for testing
@@ -23,7 +24,7 @@ image_filename = sys.argv[3]
 ideal_spots_str = ideal_filename.split(".")[0]
 test_spots_str = test_filename.split(".")[0]
 
-output_file = ideal_spots_str + "_vs_" + test_spots_str + ".tsv"
+output_file = ideal_spots_str + "_vs_" + test_spots_str + ".txt"
 output_image_filename = ideal_spots_str + "_vs_" + test_spots_str + ".jpg"
 print("Comparing %s with %s using image %s" % (ideal_spots_str, test_spots_str, image_filename))
 
@@ -89,13 +90,24 @@ pixel_accuracy = numpy.mean(pixel_distances)
 if(pixel_accuracy > 50.0):
     pixel_accuracy_string = "more than the threshold, something's wrong."
 
-print("Of the %d spots in the Cy3 image, %d were correctly detected." % (len(ideal_spots), len(correct_spots)))
-print("%d were missing:" % len(missing_spots))
+a = "Of the %d spots in the Cy3 image, %d were correctly detected." % (len(ideal_spots), len(correct_spots))
+b1 = "%d were missing:" % len(missing_spots)
 #print(missing_spots)
-print("%d were extra spots: " % len(extra_spots))
+c1 = "%d were extra spots: " % len(extra_spots)
 #print(extra_spots)
-print("Pixel accuracy is %f pixels which is %s" % (pixel_accuracy, pixel_accuracy_string))
-print("Output saved as %s" % output_file)
+d = "Pixel accuracy is %f pixels which is %s" % (pixel_accuracy, pixel_accuracy_string)
+
+with open(output_file, 'w') as f:
+    f.write(a + "\n")
+    f.write(b1 + "\n")
+    f.write(c1 + "\n")
+    f.write(d + "\n")
+
+print(a)
+print(b1)
+print(c1)
+print(d)
+print("Outputs saved as %s and %s" % (output_file, output_image_filename))
 
 # TODO: do automatic downscaling
 
@@ -134,9 +146,9 @@ def draw_spots_on_canvas(canvas, spots, colour):
         ]
         canvas.ellipse(render_spot, fill=colour, outline=None)
 
-correct_colour = (160, 225, 169) #a0e0a9
-extra_colour   = (194, 117, 116) #c27574
-missing_colour = (255, 235, 121) #ffeb79
+correct_colour = ( 20, 255,  20) #green
+missing_colour = ( 20,  20, 255) #bluish
+extra_colour   = (255,  20,  20) #red
 
 draw_spots_on_canvas(Cy3_canvas, correct_spots, colour=correct_colour)
 draw_spots_on_canvas(Cy3_canvas, extra_spots,   colour=extra_colour)
